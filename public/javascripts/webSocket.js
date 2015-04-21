@@ -2,7 +2,7 @@
  * Created by alexanderberg on 21.04.15.
  */
 
-var wsUri = "ws://localhost:9000/wstest";
+var wsUri = "ws://localhost:9000/wsactor";
 var output;
 
 function init() {
@@ -11,6 +11,7 @@ function init() {
 }
 function testWebSocket() {
     websocket = new WebSocket(wsUri);
+
     websocket.onopen = function (evt) {
         onOpen(evt);
     };
@@ -23,17 +24,17 @@ function testWebSocket() {
     websocket.onerror = function (evt) {
         onError(evt);
     };
+
+    //websocket.close();
 }
 function onOpen(evt) {
     writeToScreen("CONNECTED");
-    doSend("WebSocket rocks");
 }
 function onClose(evt) {
     writeToScreen("DISCONNECTED");
 }
 function onMessage(evt) {
     writeToScreen('<span style="color: blue;">RESPONSE: ' + evt.data + '</span>');
-    //websocket.close();
 }
 function onError(evt) {
     writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
@@ -45,7 +46,7 @@ function doSend() {
 
     var message = document.getElementById('message').value
     writeToScreen("SENT TO "+ strUser + ": " + message);
-    websocket.send(message);
+    websocket.send(strUser + " " + message);
 }
 function writeToScreen(message) {
     var pre = document.createElement("p");

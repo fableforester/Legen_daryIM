@@ -3,12 +3,17 @@
 # ~~~~
 
 # Home page
-GET        /                      controllers.Application.index()
+GET         /login               controllers.Application.login()
 
-GET        /wstest                controllers.Application.wstest()
+GET         /                    controllers.Application.index()
 
-GET        /wsactor               controllers.Application.wsactor()
+GET         /wstest              controllers.Application.wstest()
+
+GET         /wsactor             controllers.Application.wsactor()
+
+
+POST        /login               controllers.Application.authenticate()
 
 # Map static resources from the /public folder to the /assets URL path
-GET        /assets/*file          controllers.Assets.at(path="/public", file)
+GET         /assets/*file        controllers.Assets.at(path="/public", file)
 
