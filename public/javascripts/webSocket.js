@@ -39,8 +39,12 @@ function onError(evt) {
     writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
 }
 function doSend() {
+    var e = document.getElementById("kontaktListe");
+    var strUser = e.options[e.selectedIndex].text;
+
+
     var message = document.getElementById('message').value
-    writeToScreen("SENT: " + message);
+    writeToScreen("SENT TO "+ strUser + ": " + message);
     websocket.send(message);
 }
 function writeToScreen(message) {
