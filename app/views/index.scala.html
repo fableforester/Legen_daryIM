@@ -1,7 +1,17 @@
 @(message: String)
 
-@main("Welcome to Play") {
 
-    @play20.welcome(message, style = "Java")
-
-}
+<html>
+    <head>
+        <title>@message</title>
+        <script type="text/javascript" charset="utf-8" src="@routes.Assets.at("javascripts/webSocket.js")"></script>
+        <link rel="stylesheet" href="@routes.Assets.at("bootstrap/css/bootstrap.min.css")" type="text/css">
+    </head>
+    <body>
+        <div align="center">
+            <input id="message" type="text" class="form-control" placeholder="Nachricht " size="40">
+            <button id="clickMe" class="btn btn-default" onclick="doSend()">ok</button>
+            <div id="output"></div>
+        </div>
+    </body>
+</html>
