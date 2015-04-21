@@ -8,7 +8,7 @@ import views.html.index;
 public class Application extends Controller {
 
     public static Result index() {
-        return ok(index.render("Hallo"));
+        return ok(index.render("Hallod"));
     }
 
     public static WebSocket<String> wstest() {
