@@ -3,14 +3,12 @@
 # ~~~~
 
 # Home page
-GET         /login               controllers.Application.login()
 
 GET         /                    controllers.Application.index()
 
-GET         /wstest              controllers.Application.wstest()
+GET         /webSocket           controllers.Application.webSocket()
 
-GET         /wsactor             controllers.Application.wsactor()
-
+GET         /login               controllers.Application.login()
 
 POST        /login               controllers.Application.authenticate()
 

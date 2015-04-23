@@ -2,7 +2,7 @@
  * Created by alexanderberg on 21.04.15.
  */
 
-var wsUri = "ws://localhost:9000/wsactor";
+var wsUri = "ws://localhost:9000/webSocket";
 var output;
 
 function init() {
