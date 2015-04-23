@@ -1,0 +1,13 @@
+CREATE (alex:Benutzer { name:"Alex Berg", email:"alex@web.de"})
+CREATE (moritz:Benutzer { name:"Moritz Hielscher", email:"moritz@web.de"})
+CREATE (fabian:Benutzer { name:"Fabian Lewalder", email:"fabian@web.de"})
+CREATE (hallo1:Nachricht { text:"Hallo!"})
+CREATE (hallo2:Nachricht { text:"Hallo zurück!"})
+CREATE (alex)-[:BEFREUNDET_MIT]->(moritz)
+CREATE (moritz)-[:BEFREUNDET_MIT]->(alex)
+CREATE (alex)-[:BEFREUNDET_MIT]->(fabian)
+CREATE (fabian)-[:BEFREUNDET_MIT]->(alex)
+CREATE (alex)-[n11:SENDET_NACHRICHT]->(hallo1)
+CREATE (hallo1)<-[n12:EMPFAENGT_NACHRICHT]-(moritz)
+CREATE (moritz)-[n21:SENDET_NACHRICHT]->(hallo2)
+CREATE (hallo2)<-[n22:EMPFAENGT_NACHRICHT]-(alex);
