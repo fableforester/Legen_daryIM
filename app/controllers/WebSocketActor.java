@@ -1,7 +1,10 @@
 package controllers;
 
 import akka.actor.*;
+import json.JSONObject;
+import play.api.libs.json.Json;
 import play.libs.Akka;
+import scala.util.parsing.json.JSONObject$;
 
 import java.util.HashMap;
 
@@ -21,20 +24,14 @@ public class WebSocketActor extends UntypedActor {
         if (message instanceof String) {
             String event = (String)message;
 
-            if (event.contains("alex@web.de")){
-                ActorPath targetpath= clientWebSocketActors.get("alex@web.de");
-                ActorSelection targetActor = Akka.system().actorSelection(targetpath);
-                System.out.println("Nachricht an  Alex gesendet");
-                targetActor.tell(event, self());
+            JSONObject json = new JSONObject(event);
 
+            String empfanger = json.get("empfaenger").toString();
 
-            } else if (event.contains("moritz@web.de")){
-                ActorPath targetpath= clientWebSocketActors.get("moritz@web.de");
-                ActorSelection targetActor = Akka.system().actorSelection(targetpath);
-                System.out.println("Nachricht an  Moritz gesendet");
-                targetActor.tell(event, self());
-
-            }
+            ActorPath targetpath= clientWebSocketActors.get(empfanger);
+            ActorSelection targetActor = Akka.system().actorSelection(targetpath);
+            System.out.println("Nachricht  an  "+ empfanger + "  gesendet");
+            targetActor.tell(event, self());
 
         }
 

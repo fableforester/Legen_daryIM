@@ -1,6 +1,3 @@
-/**
- * Created by alexanderberg on 21.04.15.
- */
 
 var wsUri = "ws://localhost:9000/webSocket";
 var output;
@@ -42,15 +39,22 @@ function onError(evt) {
 function doSend() {
     var e = document.getElementById("kontaktListe");
     var strUser = e.options[e.selectedIndex].text;
+    var message = document.getElementById('message').value;
+    var d = new Date();
 
+    var obj = new Object();
+    obj.empfaenger = strUser;
+    obj.nachricht = message;
+    obj.gesendetAm = d.getTime();
 
-    var message = document.getElementById('message').value
+    var jsonString= JSON.stringify(obj);
+
     writeToScreen("SENT TO "+ strUser + ": " + message);
-    websocket.send(strUser + " " + message);
+    websocket.send(jsonString);
 }
 function writeToScreen(message) {
     var pre = document.createElement("p");
-    //var pre = document.body.createElement("div");
+
     pre.style.wordWrap = "break-word";
     pre.innerHTML = message;
     output.appendChild(pre);
