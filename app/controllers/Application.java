@@ -12,7 +12,7 @@ import static play.data.Form.form;
 public class Application extends Controller {
 
     public static Result index() {
-        return ok(index.render("Hallo"));
+        return ok(index.render(session("email")));
     }
 
     public static WebSocket<String> webSocket() {
@@ -38,7 +38,7 @@ public class Application extends Controller {
         String emailString = loginForm.get().email;
         session("email", emailString);
         System.out.println(emailString);
-        if (emailString != null || emailString.equals(""))
+        if (emailString != null | emailString.equals(""))
             return redirect("/");
         return badRequest(login.render(form(Login.class)));
     }

@@ -1,13 +1,14 @@
-@(message: String)
+@(user: String)
 
 
 <html>
     <head>
-        <title>@message</title>
+        <title>Messenger</title>
         <script type="text/javascript" charset="utf-8" src="@routes.Assets.at("javascripts/webSocket.js")"></script>
         <link rel="stylesheet" href="@routes.Assets.at("bootstrap/css/bootstrap.min.css")" type="text/css">
     </head>
     <body>
+        <h1 id="userName">@user</h1>
         <div>
             <select name="top5" size="5" class="form-control" id="kontaktListe">
                 <option>alex@@web.de</option>

@@ -45,8 +45,10 @@ function doSend() {
 
     var obj = new Object();
     obj.empfaenger = strUser;
+    obj.sender = document.getElementById('userName').innerHTML;
     obj.nachricht = message;
     obj.gesendetAm = d.getTime();
+
 
     var jsonString= JSON.stringify(obj);
 
