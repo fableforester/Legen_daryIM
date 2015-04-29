@@ -3,8 +3,9 @@ var wsUri = "ws://localhost:9000/webSocket";
 var output;
 
 function init() {
-    output = document.getElementById("output");
+    output = document.getElementById("chatBox");
     testWebSocket();
+    initChangedHandler();
 }
 function testWebSocket() {
     websocket = new WebSocket(wsUri);
@@ -37,7 +38,7 @@ function onError(evt) {
     writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
 }
 function doSend() {
-    var e = document.getElementById("kontaktListe");
+    var e = document.getElementById('kontaktListe');
     var strUser = e.options[e.selectedIndex].text;
     var message = document.getElementById('message').value;
     var d = new Date();
@@ -58,6 +59,14 @@ function writeToScreen(message) {
     pre.style.wordWrap = "break-word";
     pre.innerHTML = message;
     output.appendChild(pre);
+}
+
+function initChangedHandler() {
+    var sel = document.getElementById('kontaktListe');
+    sel.onchange = function() {
+        output.innerHTML = "";
+        writeToScreen('Kontakt zu ' + sel.options[sel.selectedIndex].text + ' geändert');
+    }
 }
 
 window.addEventListener("load", init, false);

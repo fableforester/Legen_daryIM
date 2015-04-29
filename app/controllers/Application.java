@@ -1,9 +1,6 @@
 package controllers;
 
-import akka.actor.ActorRef;
-import akka.actor.Props;
 import play.data.Form;
-import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.WebSocket;
@@ -20,12 +17,7 @@ public class Application extends Controller {
 
     public static WebSocket<String> webSocket() {
         String s = session().get("email");
-        return WebSocket.withActor(new F.Function<ActorRef, Props>() {
-            @Override
-            public Props apply(ActorRef out) throws Throwable {
-                return WebSocketActor.props(out, s);
-            }
-        });
+        return WebSocket.withActor(out -> WebSocketActor.props(out, s));
     }
 
     public static class Login {
@@ -43,10 +35,10 @@ public class Application extends Controller {
 
     public static Result authenticate() {
         Form<Login> loginForm = form(Login.class).bindFromRequest();
-        String s = loginForm.get().email;
-        session("email", s);
-        System.out.println(s);
-        if (s != null || s.equals(""))
+        String emailString = loginForm.get().email;
+        session("email", emailString);
+        System.out.println(emailString);
+        if (emailString != null || emailString.equals(""))
             return redirect("/");
         return badRequest(login.render(form(Login.class)));
     }

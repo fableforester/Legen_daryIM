@@ -1,9 +1,11 @@
+import controllers.Application;
 import org.junit.Test;
+import play.mvc.Http;
+import play.mvc.WebSocket;
 import play.twirl.api.Content;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static play.test.Helpers.contentAsString;
-import static play.test.Helpers.contentType;
+import static play.test.Helpers.*;
 
 
 /**
@@ -25,6 +27,16 @@ public class ApplicationTest {
         Content html = views.html.index.render("Your new application is ready.");
         assertThat(contentType(html)).isEqualTo("text/html");
         assertThat(contentAsString(html)).contains("Your new application is ready.");
+    }
+
+    @Test
+    public void nachrichtSenden(){
+        running(fakeApplication(), new Runnable() {
+            public void run() {
+
+                WebSocket<String> socketa = Application.webSocket();
+            }
+        });
     }
 
 
