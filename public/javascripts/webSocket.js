@@ -38,21 +38,20 @@ function onError(evt) {
     writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
 }
 function doSend() {
-    var e = document.getElementById('kontaktListe');
-    var strUser = e.options[e.selectedIndex].text;
+    var kontaktListeElement = document.getElementById('kontaktListe');
+    var empfangerString = kontaktListeElement.options[kontaktListeElement.selectedIndex].text;
     var message = document.getElementById('message').value;
-    var d = new Date();
+    var date = new Date();
 
-    var obj = new Object();
-    obj.empfaenger = strUser;
-    obj.sender = document.getElementById('userName').innerHTML;
-    obj.nachricht = message;
-    obj.gesendetAm = d.getTime();
+    var nachricht = new Object();
+    nachricht.empfaenger = empfangerString;
+    nachricht.sender = document.getElementById('userName').innerHTML;
+    nachricht.text = message;
+    nachricht.gesendetAm = date.getTime();
 
+    var jsonString= JSON.stringify(nachricht);
 
-    var jsonString= JSON.stringify(obj);
-
-    writeToScreen("SENT TO "+ strUser + ": " + message);
+    writeToScreen("SENT TO "+ empfangerString + ": " + message);
     websocket.send(jsonString);
 }
 function writeToScreen(message) {

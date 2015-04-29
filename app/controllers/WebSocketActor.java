@@ -28,7 +28,7 @@ public class WebSocketActor extends UntypedActor {
 
             String empfanger = jsonNachricht.get("empfaenger").toString();
 
-            ActorPath targetpath= clientWebSocketActors.get(empfanger);
+            ActorPath targetpath = clientWebSocketActors.get(empfanger);
             ActorSelection targetActor = Akka.system().actorSelection(targetpath);
             System.out.println("Nachricht  an  "+ empfanger + "  gesendet");
             targetActor.tell(jsonNachricht.toString(), self());
