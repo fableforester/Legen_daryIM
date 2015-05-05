@@ -29,15 +29,4 @@ public class ApplicationTest {
         assertThat(contentAsString(html)).contains("Your new application is ready.");
     }
 
-    @Test
-    public void nachrichtSenden(){
-        running(fakeApplication(), new Runnable() {
-            public void run() {
-
-                WebSocket<String> socketa = Application.webSocket();
-            }
-        });
-    }
-
-
 }

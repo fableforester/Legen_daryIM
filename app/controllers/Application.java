@@ -1,15 +1,19 @@
 package controllers;
 
+import model.BenutzerDao;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.WebSocket;
 import views.html.index;
 import views.html.login;
+import views.html.register;
 
 import static play.data.Form.form;
 
 public class Application extends Controller {
+
+    public static BenutzerDao benutzerDao = new BenutzerDao();
 
     public static Result index() {
         return ok(index.render(session("email")));
@@ -20,7 +24,7 @@ public class Application extends Controller {
         return WebSocket.withActor(out -> WebSocketActor.props(out, s));
     }
 
-    public static class Login {
+    public static class Benutzer {
 
         public String email;
         public String password;
@@ -29,17 +33,36 @@ public class Application extends Controller {
 
     public static Result login() {
         return ok(
-                login.render(form(Login.class))
+                login.render(form(Benutzer.class), "")
         );
     }
 
+    public static Result register() {
+        return ok(
+                register.render(form(Benutzer.class))
+        );
+    }
+
+    public static Result registerBenutzer() {
+        Form<Benutzer> registerForm = form(Benutzer.class).bindFromRequest();
+        String emailString = registerForm.get().email;
+        String password = registerForm.get().password;
+
+        System.out.println("Registriere Benutzer:" + emailString + ", " + password);
+
+        return redirect("/login");
+    }
+
+
     public static Result authenticate() {
-        Form<Login> loginForm = form(Login.class).bindFromRequest();
-        String emailString = loginForm.get().email;
-        session("email", emailString);
-        System.out.println(emailString);
-        if (emailString != null | emailString.equals(""))
+        Form<Benutzer> loginForm = form(Benutzer.class).bindFromRequest();
+        String email = loginForm.get().email;
+        String password = loginForm.get().password;
+
+        if (benutzerDao.validateBenutzer(email, password)){
+            session("email", email);
             return redirect("/");
-        return badRequest(login.render(form(Login.class)));
+        }
+        return badRequest(login.render(form(Benutzer.class), "Falsches Passwort "));
     }
 }

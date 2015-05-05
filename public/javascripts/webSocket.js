@@ -63,10 +63,10 @@ function writeToScreen(message) {
 }
 
 function initChangedHandler() {
-    var sel = document.getElementById('kontaktListe');
-    sel.onchange = function() {
+    var kontaktListeElement = document.getElementById('kontaktListe');
+    kontaktListeElement.onchange = function() {
         output.innerHTML = "";
-        writeToScreen('Kontakt zu ' + sel.options[sel.selectedIndex].text + ' geändert');
+        writeToScreen('Kontakt zu ' + kontaktListeElement.options[kontaktListeElement.selectedIndex].text + ' geändert');
     }
 }
 
