@@ -10,9 +10,11 @@ GET         /webSocket           controllers.Application.webSocket()
 
 GET         /login               controllers.Application.login()
 
+GET         /logout               controllers.Application.logout()
+
 POST        /login               controllers.Application.authenticate()
 
-GET         /register           controllers.Application.register()
+GET         /register            controllers.Application.register()
 
 POST        /register            controllers.Application.registerBenutzer()
 

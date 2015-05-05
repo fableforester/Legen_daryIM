@@ -16,7 +16,7 @@ public class Application extends Controller {
     public static BenutzerDao benutzerDao = new BenutzerDao();
 
     public static Result index() {
-        return ok(index.render(session("email")));
+        return ok(index.render(session("email"), benutzerDao.getFriends()));
     }
 
     public static WebSocket<String> webSocket() {
@@ -64,5 +64,10 @@ public class Application extends Controller {
             return redirect("/");
         }
         return badRequest(login.render(form(Benutzer.class), "Falsches Passwort "));
+    }
+
+    public static Result logout(){
+        session("email", "");
+        return redirect("/login");
     }
 }
