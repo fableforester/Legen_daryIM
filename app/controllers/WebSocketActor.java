@@ -1,6 +1,8 @@
 package controllers;
 
 import akka.actor.*;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import json.JSONObject;
 import play.api.libs.json.Json;
 import play.libs.Akka;
@@ -11,6 +13,8 @@ import java.util.HashMap;
 public class WebSocketActor extends UntypedActor {
 
     private final ActorRef out;
+
+    ActorRef persistActor = Akka.system().actorOf(Props.create(PersistMessageActor.class));
 
     public static Props props(ActorRef out) {
         return Props.create(WebSocketActor.class, out);
@@ -27,6 +31,8 @@ public class WebSocketActor extends UntypedActor {
             JSONObject jsonNachricht = new JSONObject(event);
 
             String empfanger = jsonNachricht.get("empfaenger").toString();
+
+            persistActor.tell(jsonNachricht, self());
 
             ActorPath targetpath = clientWebSocketActors.get(empfanger);
             ActorSelection targetActor = Akka.system().actorSelection(targetpath);
