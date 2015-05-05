@@ -1,32 +1,29 @@
-import controllers.Application;
+import com.google.common.collect.ImmutableMap;
+import org.junit.Before;
 import org.junit.Test;
-import play.mvc.Http;
-import play.mvc.WebSocket;
-import play.twirl.api.Content;
+import play.mvc.Result;
+import play.test.WithApplication;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static play.test.Helpers.*;
 
 
-/**
-*
-* Simple (JUnit) tests that can call all parts of a play app.
-* If you are interested in mocking a whole application, see the wiki for more details.
-*
-*/
-public class ApplicationTest {
+public class ApplicationTest extends WithApplication {
+    @Before
+    public void setUp() {
+        start(fakeApplication(inMemoryDatabase(), fakeGlobal()));
 
-    @Test
-    public void simpleCheck() {
-        int a = 1 + 1;
-        assertThat(a).isEqualTo(2);
     }
 
-    @Test
-    public void renderTemplate() {
-        Content html = views.html.index.render("Your new application is ready.");
-        assertThat(contentType(html)).isEqualTo("text/html");
-        assertThat(contentAsString(html)).contains("Your new application is ready.");
-    }
-
+//    @Test
+//    public void authenticateSuccess() {
+//        Result result = callAction(
+//                controllers.routes.ref.Application.authenticate(),
+//                fakeRequest().withFormUrlEncodedBody(ImmutableMap.of(
+//                        "email", "bob@example.com",
+//                        "password", "secret"))
+//        );
+//        assertThat(302 == status(result));
+//        assertThat("bob@example.com".equals(session(result).get("email")));
+//    }
 }

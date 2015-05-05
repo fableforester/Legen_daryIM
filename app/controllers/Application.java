@@ -16,7 +16,7 @@ public class Application extends Controller {
     public static BenutzerDao benutzerDao = new BenutzerDao();
 
     public static Result index() {
-        return ok(index.render(session("email"), benutzerDao.getFriends()));
+        return ok(index.render(session("email"), benutzerDao.getFreunde()));
     }
 
     public static WebSocket<String> webSocket() {
@@ -39,18 +39,25 @@ public class Application extends Controller {
 
     public static Result register() {
         return ok(
-                register.render(form(Benutzer.class))
+                register.render(form(Benutzer.class), "Bitte Email und Passwort angeben")
         );
     }
 
     public static Result registerBenutzer() {
         Form<Benutzer> registerForm = form(Benutzer.class).bindFromRequest();
-        String emailString = registerForm.get().email;
+        String email = registerForm.get().email;
         String password = registerForm.get().password;
 
-        System.out.println("Registriere Benutzer:" + emailString + ", " + password);
+        if (benutzerDao.registerBenutzer(email,password)){
+            return ok(
+                    login.render(form(Benutzer.class), "Registrierung erfolgreich!")
+            );
+        }
 
-        return redirect("/login");
+        return ok(
+                register.render(form(Benutzer.class),"")
+        );
+
     }
 
 
@@ -60,6 +67,7 @@ public class Application extends Controller {
         String password = loginForm.get().password;
 
         if (benutzerDao.validateBenutzer(email, password)){
+            session().clear();
             session("email", email);
             return redirect("/");
         }
