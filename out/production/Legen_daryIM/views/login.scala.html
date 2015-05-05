@@ -1,0 +1,23 @@
+@(form: Form[Application.Login])
+
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+@helper.form(routes.Application.authenticate) {
+    <h1>Sign in</h1>
+
+    <p>
+        <input type="email" name="email" placeholder="Email" value="@form("email").value">
+    </p>
+    <p>
+        <input type="password" name="password" placeholder="Password">
+    </p>
+    <p>
+        <button type="submit">Login</button>
+    </p>
+}
+</body>
+</html>
