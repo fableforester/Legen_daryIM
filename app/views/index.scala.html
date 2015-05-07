@@ -5,6 +5,8 @@
     <head>
         <title>Messenger</title>
         <script type="text/javascript" charset="utf-8" src="@routes.Assets.at("javascripts/webSocket.js")"></script>
+        <script src="@controllers.routes.Application.jsRoutes()" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
         <link rel="stylesheet" href="@routes.Assets.at("bootstrap/css/bootstrap.min.css")" type="text/css">
     </head>
     <body>
@@ -23,6 +25,8 @@
             <button id="clickMe" class="btn btn-default" onclick="doSend ( )">ok</button>
             <div id="chatBox"></div>
         </div>
+
+        <button id="clickMe2" class="btn btn-default" onclick="doSendAjax ( )">alert</button>
 
 
     </body>

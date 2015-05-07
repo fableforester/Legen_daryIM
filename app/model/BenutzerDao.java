@@ -23,4 +23,9 @@ public class BenutzerDao {
         //TODO Benutzer anlegen
         return true;
     }
+
+    //Schaut ob der User existiert
+    public boolean existUser(String email) {
+        return true;
+    }
 }

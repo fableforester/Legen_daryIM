@@ -14,7 +14,7 @@ public class Authenticator extends Security.Authenticator {
         Falls der Benutzername leer ist muss null returned werden
         damit der Authenticator greift
          */
-        if (userName.equals(""))
+        if (userName != null && userName.equals(""))
             return null;
         return userName;
     }

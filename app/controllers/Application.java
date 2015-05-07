@@ -2,6 +2,8 @@ package controllers;
 
 import model.BenutzerDao;
 
+
+import play.Routes;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -72,7 +74,7 @@ public class Application extends Controller {
             );
         } else {
             return ok(
-                    register.render(form(Benutzer.class),"Email schon vergeben")
+                    register.render(form(Benutzer.class), "Email schon vergeben")
             );
         }
 
@@ -106,6 +108,24 @@ public class Application extends Controller {
     }
 
     /*
+    Fügt den Freund hinzu und liefert den Namen zurück bei Erfolg
+     */
+    public static Result addFriend(String email) {
+        if (benutzerDao.existUser(email))
+            return ok(email);
+        return ok("NichtGefunden");
+    }
+
+    @SuppressWarnings("deprecation")
+    public static Result jsRoutes()
+    {
+        response().setContentType("text/javascript");
+        return ok(Routes.javascriptRouter("appRoutes", //appRoutes will be the JS object available in our view
+                routes.javascript.Application.addFriend()
+        ));
+    }
+
+    /*
     Hilfklasse für doe Formulare
      */
     public static class Benutzer {
@@ -114,6 +134,5 @@ public class Application extends Controller {
         public String password;
 
     }
-
 
 }

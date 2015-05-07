@@ -70,4 +70,12 @@ function initChangedHandler() {
     }
 }
 
+function doSendAjax() {
+    appRoutes.controllers.Application.addFriend("haaloo").ajax( {
+        success : function ( data ) {
+            alert(data);
+        }
+    });
+}
+
 window.addEventListener("load", init, false);
