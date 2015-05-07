@@ -21,6 +21,6 @@ public class BenutzerDao {
 
     public boolean registerBenutzer(String email, String password) {
         //TODO Benutzer anlegen
-        return true;
+        return false;
     }
 }

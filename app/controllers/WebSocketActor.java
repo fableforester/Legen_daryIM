@@ -2,11 +2,7 @@ package controllers;
 
 import akka.actor.*;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import json.JSONObject;
-import play.api.libs.json.Json;
 import play.libs.Akka;
-import scala.util.parsing.json.JSONObject$;
 
 import java.util.HashMap;
 
@@ -28,16 +24,23 @@ public class WebSocketActor extends UntypedActor {
         if (message instanceof String) {
             String event = (String)message;
 
-            JSONObject jsonNachricht = new JSONObject(event);
+            //Json Objekt erzeugen
+            JsonNode node = play.libs.Json.parse(event);
 
-            String empfanger = jsonNachricht.get("empfaenger").toString();
+            //Empfänger ermitteln
+            String empfanger = node.get("empfaenger").toString();
 
-            persistActor.tell(jsonNachricht, self());
+            //Ein anderer Actor persisitiert die Nachricht
+            persistActor.tell(node, self());
 
+            //Der Pfad zum Empfänger Actor wird rausgesucht
             ActorPath targetpath = clientWebSocketActors.get(empfanger);
+
+            //Eine Referenz auf den Actor wird vom System abgerufen
             ActorSelection targetActor = Akka.system().actorSelection(targetpath);
-            System.out.println("Nachricht  an  "+ empfanger + "  gesendet");
-            targetActor.tell(jsonNachricht.toString(), self());
+
+            //Dem Actor die Nachricht senden
+            targetActor.tell(node.toString(), self());
 
         }
 

@@ -19,6 +19,9 @@ public class Authenticator extends Security.Authenticator {
         return userName;
     }
 
+    /*
+    Unautorisierte Benutzer werden zum LogIn weitergeleitet
+     */
     @Override
     public Result onUnauthorized(Context context) {
         return redirect("/login");
