@@ -1,9 +1,12 @@
 package controllers;
 
 import model.BenutzerDao;
+
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+
+import play.mvc.Security;
 import play.mvc.WebSocket;
 import views.html.index;
 import views.html.login;
@@ -15,6 +18,7 @@ public class Application extends Controller {
 
     public static BenutzerDao benutzerDao = new BenutzerDao();
 
+    @Security.Authenticated(Authenticator.class)
     public static Result index() {
         return ok(index.render(session("email"), benutzerDao.getFreunde()));
     }
