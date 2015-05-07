@@ -21,6 +21,10 @@ public class WebSocketActor extends UntypedActor {
     }
 
     public void onReceive(Object message) throws Exception {
+        //TODO das senden der Nachricht in extra Actor
+        //Das auslagern hat den Vorteil für scheduled jobs, regelmäßig senden an
+        //offline kontakte
+
         if (message instanceof String) {
             String event = (String)message;
 
