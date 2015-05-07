@@ -40,7 +40,7 @@ public class WebSocketActor extends UntypedActor {
             ActorSelection targetActor = Akka.system().actorSelection(targetpath);
 
             //Dem Actor die Nachricht senden
-            targetActor.tell(node.toString(), self());
+            targetActor.tell(node, self());
 
         }
 
