@@ -27,7 +27,7 @@ public class Application extends Controller {
     public static Result index() {
         return ok(
                 index.render(session("email"),
-                        benutzerDao.getFreunde())
+                        benutzerDao.getFriends())
         );
     }
 
@@ -68,7 +68,7 @@ public class Application extends Controller {
 
         //Falls der Benutzer nicht exisitiert wird einer erstellt
         //Ansonsten die gleiche Seite mit einer Fehlermeldung angezeigt
-        if (benutzerDao.registerBenutzer(email,password)){
+        if (benutzerDao.registerUser(email, password)){
             return ok(
                     login.render(form(Benutzer.class), "Registrierung erfolgreich!")
             );
@@ -77,8 +77,6 @@ public class Application extends Controller {
                     register.render(form(Benutzer.class), "Email schon vergeben")
             );
         }
-
-
     }
 
     /*
@@ -90,7 +88,7 @@ public class Application extends Controller {
         String password = loginForm.get().password;
 
         //Falls Nameu nd Passwort stimmen wird dieser in die Session geschrieben
-        if (benutzerDao.validateBenutzer(email, password)){
+        if (benutzerDao.validateUser(email, password)){
             session().clear();
             session("email", email);
             //Wieterleitung an die Hauptseite

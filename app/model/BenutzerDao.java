@@ -5,12 +5,12 @@ import java.util.List;
 
 public class BenutzerDao {
 
-    public boolean validateBenutzer(String email, String password){
+    public boolean validateUser(String email, String password){
         //TODO Benutzer validieren
         return true;
     }
 
-    public List<String> getFreunde(){
+    public List<String> getFriends(){
         //TODO Freunde aus der Tabelle abrufen
         LinkedList<String> friends = new LinkedList<>();
         friends.add("moritz@web.de");
@@ -19,7 +19,7 @@ public class BenutzerDao {
         return friends;
     }
 
-    public boolean registerBenutzer(String email, String password) {
+    public boolean registerUser(String email, String password) {
         //TODO Benutzer anlegen
         return true;
     }

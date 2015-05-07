@@ -26,16 +26,16 @@ function testWebSocket() {
     //websocket.close();
 }
 function onOpen(evt) {
-    writeToScreen("CONNECTED");
+    writeMessageToScreen("CONNECTED");
 }
 function onClose(evt) {
-    writeToScreen("DISCONNECTED");
+    writeMessageToScreen("DISCONNECTED");
 }
 function onMessage(evt) {
-    writeToScreen('<span style="color: blue;">RESPONSE: ' + evt.data + '</span>');
+    writeMessageToScreen('<span style="color: blue;">RESPONSE: ' + evt.data + '</span>');
 }
 function onError(evt) {
-    writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
+    writeMessageToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
 }
 function doSend() {
     var kontaktListeElement = document.getElementById('kontaktListe');
@@ -51,10 +51,10 @@ function doSend() {
 
     var jsonString= JSON.stringify(nachricht);
 
-    writeToScreen("SENT TO "+ empfangerString + ": " + message);
+    writeMessageToScreen("SENT TO "+ empfangerString + ": " + message);
     websocket.send(jsonString);
 }
-function writeToScreen(message) {
+function writeMessageToScreen(message) {
     var pre = document.createElement("p");
 
     pre.style.wordWrap = "break-word";
@@ -66,14 +66,20 @@ function initChangedHandler() {
     var kontaktListeElement = document.getElementById('kontaktListe');
     kontaktListeElement.onchange = function() {
         output.innerHTML = "";
-        writeToScreen('Kontakt zu ' + kontaktListeElement.options[kontaktListeElement.selectedIndex].text + ' geändert');
+        writeMessageToScreen('Kontakt zu ' + kontaktListeElement.options[kontaktListeElement.selectedIndex].text + ' geändert');
     }
 }
 
-function doSendAjax() {
-    appRoutes.controllers.Application.addFriend("haaloo").ajax( {
+function doSendAjaxToAddFriend( ) {
+    var emailOfFriendField = document.getElementById('userToAdd');
+    var email = emailOfFriendField.value;
+    appRoutes.controllers.Application.addFriend(email).ajax( {
         success : function ( data ) {
-            alert(data);
+            var emailOption = document.createElement("option");
+            emailOption.innerHTML = email;
+            var kontaktListeElement = document.getElementById('kontaktListe');
+            kontaktListeElement.appendChild(emailOption);
+            emailOfFriendField.value = "";
         }
     });
 }

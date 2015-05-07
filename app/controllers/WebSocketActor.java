@@ -36,6 +36,10 @@ public class WebSocketActor extends UntypedActor {
             //Der Pfad zum Empfänger Actor wird rausgesucht
             ActorPath targetpath = clientWebSocketActors.get(empfanger);
 
+            //Sollte der Empfänger offline sein geht die Nchricht ins leere
+            if (targetpath == null)
+                return;
+
             //Eine Referenz auf den Actor wird vom System abgerufen
             ActorSelection targetActor = Akka.system().actorSelection(targetpath);
 
