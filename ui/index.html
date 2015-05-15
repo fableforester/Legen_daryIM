@@ -1,0 +1,117 @@
+
+<!--@(user: String, friends: List[String])-->
+
+
+<html>
+    <head>
+        <title>Legen_daryIM</title>
+        <script type="text/javascript" charset="utf-8" src="@routes.Assets.at("javascripts/webSocket.js")"></script>
+        <script type="text/javascript" charset="utf-8" src="@routes.Assets.at("javascripts/friends.js")"></script>
+        <script type="text/javascript" charset="utf-8" src="@routes.Assets.at("javascripts/chat.js")"></script>
+        <script src="@controllers.routes.Application.jsRoutes()" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
+        <link rel="stylesheet" href="@routes.Assets.at("bootstrap/css/bootstrap.min.css")" type="text/css">
+		<link rel="stylesheet" type="text/css" href="./style.css">
+		<style type="text/css">
+		.DefaultErrorFieldStyle {
+		background-color: rgb(255,0,0);
+		}.DefaultErrorLabelStyle {
+		background-color: rgb(255,0,0);
+		}</style>
+		
+		<style type="text/css" title="positions">
+body { margin:0px; width: 1243px; }
+div#LayoutLYR { float:left; position:absolute; }
+div#LayoutBereich1LYR { position:absolute; top:300px; left:400px; width:465px; height:160px; z-index:1 }
+div#FormsFieldLabel1LYR { position:absolute; top:35px; left:66px; width:124px; height:17px; z-index:1 }
+div#FormsMultiLine1LYR { position:absolute; top:0px; left:0px; width:449px; height:97px; z-index:2 }
+div#FormsButton1LYR { position:absolute; top:125px; left:194px; width:79px; height:24px; z-index:3 }
+div#LayoutBereich2LYR { position:absolute; top:55px; left:116px; width:230px; height:200px; z-index:2 }
+div#FormsFieldLabel3LYR { position:absolute; top:30px; left:30px; width:191px; height:17px; z-index:1 }
+div#LayoutBereich6LYR { position:absolute; top:340px; left:116px; width:230px; height:200px; z-index:3 }
+div#SearchLYR { position:absolute; top:57px; left:0px; width:230px; height:214px; z-index:1 }
+div#FormsButton3LYR { position:absolute; top:30px; left:74px; width:76px; height:24px; z-index:2 }
+div#FormsButton2LYR { position:absolute; top:160px; left:74px; width:76px; height:24px; z-index:2 }
+div#FormsFieldLabel4LYR { position:absolute; top:0px; left:30px; width:124px; height:17px; z-index:4 }
+div#FormsEditField1LYR { position:absolute; top:0px; left:30px; width:160px; height:19px; z-index:5 }
+div#LayoutBereich7LYR { position:absolute; top:100px; left:400px; width:465px; height:200px; z-index:4 }
+</style>
+		
+    </head>
+    <body onunload="closeWebsocket()">
+        <p id="userName">@user</p>
+        <a href="@routes.Application.logout()">Logout</a>
+      <!--  <div>
+            <label for="kontaktListe">Kontakliste </label>
+            <select name="top5" size="5" class="form-control" id="kontaktListe">
+            @friends.map { friend =>
+                <option>@friend</option>
+            }
+            </select>
+        </div>
+		-->
+		
+		
+	<div id="LayoutBereich7LYR" style="background-color: rgb(255,255,255);">
+      <div id="LayoutBereich7" class="nof-lyr" style="height: 154px">
+        <form name="LayoutBereich7FORMULAR" action="" method="post">
+        </form>
+      </div>
+    </div>
+		
+		
+		   <div id="LayoutBereich6LYR">
+      <div id="LayoutBereich6" class="nof-lyr" style="padding-bottom: 6px">
+        <form name="LayoutBereich2FORMULAR" action="" method="post">		 
+		 <div id="SearchLYR"><select name="top5" size="5" style="white-space: pre; width: 229px ; height: 100px" >
+            @friends.map { friend =>
+                <option>@friend</option>
+            }
+			</select></div>
+          <div id="FormsButton3LYR"><input type="submit" id="FormsButton3" name="bt_suchen" value="Suchen" style="height: 24px; width: 76px;"></div>
+          <div id="FormsButton2LYR"><input type="submit" id="FormsButton2" name="bt_add" value="Add" style="height: 24px; width: 76px;"></div>
+          <div id="FormsFieldLabel4LYR"><label id="FormsFieldLabel4" for="FormsEditField1"></label></div>
+          <div id="FormsEditField1LYR"><input type="text" id="FormsEditField1" placeholder="Find a Contact!" name="Eingabefeld1" size="20" maxlength="20" style="white-space: pre; width: 156px;"></div>
+        </form>
+      </div>
+    </div>
+		
+		
+		
+		<div id="LayoutLYR">
+    <div id="LayoutBereich1LYR">
+      <div id="LayoutBereich1" class="nof-lyr" style="padding-bottom: 11px">
+        <form name="LayoutBereich1FORMULAR" action="" method="post">
+          <div id="FormsFieldLabel1LYR"><label id="FormsFieldLabel1" for="FormsMultiLine1">Neue-Beschriftung:</label></div>
+          <div id="FormsMultiLine1LYR"><textarea id="FormsMultiLine1" name="txt_message" rows="7" cols="54" style="white-space: pre; width: 445px;" placeholder="Write a message!"></textarea></div>
+          <div id="FormsButton1LYR"><input type="submit" id="FormsButton1" name="Schaltflache1" value="Senden" style="height: 24px; width: 79px;"></div>
+        </form>
+      </div>
+    </div>
+	
+	
+	    <div id="LayoutBereich2LYR" style="background-color: rgb(255,255,255);">
+      <div id="LayoutBereich2" class="nof-lyr" style="padding-bottom: 200px">
+    <select name="top5" size="5" class="form-control" id="kontaktListe" style="white-space: pre; width: 229px ; height: 200px ">
+            @friends.map { friend =>
+                <option>@friend</option>
+            }
+            </select>
+      </div>
+    </div>
+	
+	
+	
+		
+ <!--       <div align="center">
+            <input id="message" type="text" class="form-control" placeholder="Nachricht " size="40">
+            <button id="clickMe" class="btn btn-default" onclick="doSend ( )">ok</button>
+            <div id="chatBox"></div>
+        </div>
+
+        <input id="userToAdd" type="text" class="form-control" placeholder="Email des Freundes " size="40">
+        <button id="clickMe2" class="btn btn-default" onclick="doSendAjaxToAddFriend ( )">alert</button>
+-->
+
+    </body>
+</html>
