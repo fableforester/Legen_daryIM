@@ -1,4 +1,4 @@
-@(form: Form[Application.Login])
+@(form: Form[Application.Benutzer], message: String)
 
 <html>
 <head lang="en">
@@ -6,18 +6,22 @@
   <title></title>
 </head>
 <body>
-@helper.form(routes.Application.authenticate) {
+@helper.form(routes.Application.authenticate()) {
     <h1>Sign in</h1>
-
+    <h2>@message</h2>
     <p>
         <input type="email" name="email" placeholder="Email" value="@form("email").value">
     </p>
     <p>
-        <input type="password" name="password" placeholder="Password">
+        <input type="password" name="password" placeholder="Password" value="@form("password").value">
     </p>
     <p>
         <button type="submit">Login</button>
     </p>
 }
+
+<p>
+    <a href="@routes.Application.register()">Registrieren</a>
+</p>
 </body>
 </html>
