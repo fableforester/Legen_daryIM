@@ -7,6 +7,8 @@ public class Nachricht {
 
     int id;
     String text;
+    String empfaenger;
+    String sender;
 
     public Nachricht(int id, String text){
         this.id = id;
@@ -19,6 +21,22 @@ public class Nachricht {
 
     public String getText(){
         return text;
+    }
+
+    public String getEmpfaenger() {
+        return empfaenger;
+    }
+
+    public void setEmpfaenger(String empfaenger) {
+        this.empfaenger = empfaenger;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
     }
 
 }
