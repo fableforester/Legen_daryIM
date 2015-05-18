@@ -9,7 +9,7 @@ public class BenutzerDao {
     List<Benutzer> users = new ArrayList<Benutzer>();
     boolean hasDummyData = false;
 
-    //Erstelle dummy Daten für die Dummy Datenbank...
+    //Erstelle dummy Daten fuer die Dummy Datenbank...
     public void createDummyData(){
         users.add(new Benutzer(0, "Moritz", "moritz@web.de", "geheim"));
         users.add(new Benutzer(1, "Fabian", "fabian@web.de", "geheim"));
@@ -27,16 +27,12 @@ public class BenutzerDao {
         return true;
     }
 
-    //TODO Benutzer übergeben, dafür erstmal alles auf Benutzer-Struktur umstellen
-    public List<String> getFriends(){
+    //TODO Benutzer uebergeben, dafuer erstmal alles auf Benutzer-Struktur umstellen
+    public List<Benutzer> getFriends(){
         //TODO Freunde aus der Tabelle abrufen
         if(!hasDummyData)
             createDummyData();
-        LinkedList<String> friends = new LinkedList<>();
-        for(Benutzer user : users.get(0).getKontaktliste()){
-            friends.add(user.getEmail());
-        }
-        return friends;
+        return users.get(0).getKontaktliste();
     }
 
     public boolean registerUser(String email, String password) {

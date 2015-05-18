@@ -45,7 +45,7 @@ public class Application extends Controller {
      */
     public static Result login() {
         return ok(
-                login.render(form(Benutzer.class), "")
+                login.render(form(BenutzerForm.class), "")
         );
     }
 
@@ -54,7 +54,7 @@ public class Application extends Controller {
      */
     public static Result register() {
         return ok(
-                register.render(form(Benutzer.class), "Bitte Email und Passwort angeben")
+                register.render(form(BenutzerForm.class), "Bitte Email und Passwort angeben")
         );
     }
 
@@ -62,7 +62,7 @@ public class Application extends Controller {
     Erstellt einen Benutzer
      */
     public static Result registerBenutzer() {
-        Form<Benutzer> registerForm = form(Benutzer.class).bindFromRequest();
+        Form<BenutzerForm> registerForm = form(BenutzerForm.class).bindFromRequest();
         String email = registerForm.get().email;
         String password = registerForm.get().password;
 
@@ -70,11 +70,11 @@ public class Application extends Controller {
         //Ansonsten die gleiche Seite mit einer Fehlermeldung angezeigt
         if (benutzerDao.registerUser(email, password)){
             return ok(
-                    login.render(form(Benutzer.class), "Registrierung erfolgreich!")
+                    login.render(form(BenutzerForm.class), "Registrierung erfolgreich!")
             );
         } else {
             return ok(
-                    register.render(form(Benutzer.class), "Email schon vergeben")
+                    register.render(form(BenutzerForm.class), "Email schon vergeben")
             );
         }
     }
@@ -83,7 +83,7 @@ public class Application extends Controller {
     Authentifiziert den Benutzer und schreibt die email in die Session
      */
     public static Result authenticate() {
-        Form<Benutzer> loginForm = form(Benutzer.class).bindFromRequest();
+        Form<BenutzerForm> loginForm = form(BenutzerForm.class).bindFromRequest();
         String email = loginForm.get().email;
         String password = loginForm.get().password;
 
@@ -94,7 +94,7 @@ public class Application extends Controller {
             //Wieterleitung an die Hauptseite
             return redirect("/");
         }
-        return ok(login.render(form(Benutzer.class), "Falsches Passwort "));
+        return ok(login.render(form(BenutzerForm.class), "Falsches Passwort "));
     }
 
     /*
@@ -126,7 +126,7 @@ public class Application extends Controller {
     /*
     Hilfklasse für doe Formulare
      */
-    public static class Benutzer {
+    public static class BenutzerForm {
 
         public String email;
         public String password;
