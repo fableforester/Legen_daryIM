@@ -20,6 +20,7 @@ public class BenutzerDao {
         users.get(1).addKontakt(users.get(2));
         users.get(2).addKontakt(users.get(0));
         users.get(2).addKontakt(users.get(1));
+        hasDummyData = true;
     }
 
     public boolean validateUser(String email, String password) {
