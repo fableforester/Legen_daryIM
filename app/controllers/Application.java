@@ -27,7 +27,7 @@ public class Application extends Controller {
     public static Result index() {
         return ok(
                 index.render(session("email"),
-                        benutzerDao.getFriends())
+                        benutzerDao.getFriends(session().get("email")))
         );
     }
 
@@ -63,12 +63,13 @@ public class Application extends Controller {
      */
     public static Result registerBenutzer() {
         Form<BenutzerForm> registerForm = form(BenutzerForm.class).bindFromRequest();
+        String name = registerForm.get().name;
         String email = registerForm.get().email;
         String password = registerForm.get().password;
 
         //Falls der Benutzer nicht exisitiert wird einer erstellt
         //Ansonsten die gleiche Seite mit einer Fehlermeldung angezeigt
-        if (benutzerDao.registerUser(email, password)){
+        if (benutzerDao.registerUser(name, email, password)){
             return ok(
                     login.render(form(BenutzerForm.class), "Registrierung erfolgreich!")
             );
@@ -109,8 +110,12 @@ public class Application extends Controller {
     Fügt den Freund hinzu und liefert den Namen zurück bei Erfolg
      */
     public static Result addFriend(String email) {
-        if (benutzerDao.existUser(email))
-            return ok(email);
+        if (benutzerDao.existUser(email)) {
+            String emailSelf = session().get("email");
+            String name = benutzerDao.createLink(emailSelf, email);
+            if (name != null)
+                return ok(name);
+        }
         return ok("NichtGefunden");
     }
 
@@ -127,7 +132,7 @@ public class Application extends Controller {
     Hilfklasse für doe Formulare
      */
     public static class BenutzerForm {
-
+        public String name;
         public String email;
         public String password;
 

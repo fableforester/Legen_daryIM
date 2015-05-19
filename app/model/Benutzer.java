@@ -8,21 +8,15 @@ import java.util.List;
  */
 public class Benutzer {
 
-    int id;
     String name;
     String email;
     String passwort;
     List<Benutzer> kontaktliste = new ArrayList<>();
 
-    public Benutzer(int id, String name, String email, String passwort){
-        this.id = id;
+    public Benutzer(String name, String email, String passwort){
         this.name = name;
         this.email = email;
         this.passwort = passwort;
-    }
-
-    public int getId(){
-        return id;
     }
 
     public String getName(){
