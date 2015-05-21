@@ -9,10 +9,10 @@
 
 </head>
 <body>
-@helper.form(routes.Application.authenticate()) {
-    <div class="container">
 
-        <form class="form-signin">
+    <div class="form-signin">
+    @helper.form(routes.Application.authenticate()) {
+        <form class="form-signin" >
             <h2 class="form-signin-heading">Please sign in</h2>
             <h3 id="message" class="form-signin-heading">@message</h3>
             <label for="inputEmail" class="sr-only">Email address</label>
@@ -20,13 +20,12 @@
             <label for="inputPassword" class="sr-only">Password</label>
             <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" value="@form("password").value" required>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+            <p>
+                <a href="@routes.Application.register()">Registrieren</a>
+            </p>
         </form>
-
+    }
     </div>
-}
 
-<p>
-    <a href="@routes.Application.register()">Registrieren</a>
-</p>
 </body>
 </html>
