@@ -12,7 +12,6 @@
 
     <div class="form-signin">
     @helper.form(routes.Application.authenticate()) {
-        <form class="form-signin" >
             <h2 class="form-signin-heading">Please sign in</h2>
             <h3 id="message" class="form-signin-heading">@message</h3>
             <label for="inputEmail" class="sr-only">Email address</label>
@@ -23,7 +22,6 @@
             <p>
                 <a href="@routes.Application.register()">Registrieren</a>
             </p>
-        </form>
     }
     </div>
 
