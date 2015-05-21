@@ -1,0 +1,60 @@
+@(form: Form[Application.BenutzerForm], message: String)
+
+<html>
+ <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="login-page">
+    <meta name="author" content="moritz">
+    <link rel="icon" href="favicon.ico"> <!--todo-->
+
+    <title>Legen_daryIM Login</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/signin.css" rel="stylesheet">
+
+</head>
+<body>
+
+@helper.form(routes.Application.authenticate()) {
+
+	<div class="container">
+
+      <form class="form-signin">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" value="@form("email").value" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" value="@form("password").value" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+      </form>
+
+    </div>
+
+}
+<p>
+    <a href="@routes.Application.register()">Registrieren</a>
+</p>
+<!--
+    <h1>Sign in</h1>
+    <h2>@message</h2>
+    <p>
+        <input type="email" name="email" placeholder="Email" value="@form("email").value">
+    </p>
+    <p>
+        <input type="password" name="password" placeholder="Password" value="@form("password").value">
+    </p>
+    <p>
+        <button type="submit">Login</button>
+    </p>
+}
+
+<p>
+    <a href="@routes.Application.register()">Registrieren</a>
+</p>-->
+</body>
+</html>
