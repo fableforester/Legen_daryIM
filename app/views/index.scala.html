@@ -2,33 +2,57 @@
 
 <html>
     <head>
-        <title>Messenger</title>
+        <title>Legen_daryIM</title>
         <script type="text/javascript" charset="utf-8" src="@routes.Assets.at("javascripts/webSocket.js")"></script>
         <script type="text/javascript" charset="utf-8" src="@routes.Assets.at("javascripts/friends.js")"></script>
         <script type="text/javascript" charset="utf-8" src="@routes.Assets.at("javascripts/chat.js")"></script>
         <script src="@controllers.routes.Application.jsRoutes()" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
+        <link rel="icon" href="@routes.Assets.at("images/favicon.png")" type="image/x-icon" />
         <link rel="stylesheet" href="@routes.Assets.at("bootstrap/css/bootstrap.min.css")" type="text/css">
     </head>
     <body onunload="closeWebsocket()">
         <p id="userName">@user</p>
-        <a href="@routes.Application.logout()">Logout</a>
-        <div>
-            <label for="kontaktListe">Kontakliste </label>
-            <select name="top5" size="5" class="form-control" id="kontaktListe">
-            @friends.map { friend =>
-                <option>@friend.getName</option>
-            }
-            </select>
+        <form ACTION="@routes.Application.logout()">
+
+            <button type="submit" class="btn btn-sm btn-info pull-right" >Logout</button>
+
+        </form>
+
+
+
+
+        <div class="col-sm-4">
+         <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Kontaktliste</h3>
+            </div>
+            <div class="panel-body">
+                <select name="top5" size="5" class="form-control" id="kontaktListe">
+                @friends.map { friend =>
+                    <option>@friend.getName</option>
+                }
+                </select>
+            </div>
+         </div>
         </div>
+
+
+
+
+
         <div align="center">
-            <input id="message" type="text" class="form-control" placeholder="Nachricht " size="40">
+                 <textarea id="message" class="form-control" rows="5" placeholder="Nachricht "></textarea>
+                <!--    <input id="message" type="text" class="form-control" placeholder="Nachricht " size="40">-->
             <button id="clickMe" class="btn btn-default" onclick="doSend ( )">ok</button>
             <div id="chatBox"></div>
         </div>
 
         <input id="userToAdd" type="text" class="form-control" placeholder="Email des Freundes " size="40">
         <button id="clickMe2" class="btn btn-default" onclick="doSendAjaxToAddFriend ( )">alert</button>
+
+
+
 
 
     </body>
