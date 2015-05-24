@@ -11,11 +11,11 @@ function writeMessageToScreen(message) {
     //var pre = document.createElement("p");
     //pre.innerHTML = message;
     //output.appendChild(pre);
-     var newcontent = document.createElement("p");
+    /*   var newcontent = document.createElement("p");
     newcontent.id = 'message_id';
     newcontent.appendChild(document.createTextNode(message));
 
-     /*
+
     var theDiv = document.getElementById("chat");
     var content = document.createTextNode(message+"<br>");
     theDiv.appendChild(content);*/
