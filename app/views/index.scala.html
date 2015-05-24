@@ -12,44 +12,66 @@
         <link rel="stylesheet" href="@routes.Assets.at("bootstrap/css/bootstrap.min.css")" type="text/css">
     </head>
     <body onunload="closeWebsocket()">
-        <p id="userName">@user</p>
+        <p id="userName">Angemeldet als: @user</p>
         <form ACTION="@routes.Application.logout()">
 
-            <button type="submit" class="btn btn-sm btn-info pull-right" >Logout</button>
+            <button type="submit" class="btn btn-sm btn-default pull-left" >Logout</button>
 
         </form>
 
 
-
-
-        <div class="col-sm-4">
-         <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Kontaktliste</h3>
+        <div class="row">
+            <div class="col-md-12" >
+            <div class="col-md-3 col-md-offset-1" >
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Kontaktliste</h3>
+                        </div>
+                        <div class="panel-body" >
+                            <select id="kontaktListe" name="top5" size="5" class="form-control"  style="height: 50%;">
+                            @friends.map { friend =>
+                                <option>@friend.getName</option>
+                            }
+                            </select>
+                        </div>
+                    </div>
             </div>
-            <div class="panel-body">
-                <select name="top5" size="5" class="form-control" id="kontaktListe">
-                @friends.map { friend =>
-                    <option>@friend.getName</option>
-                }
-                </select>
+            <div id="chat" class="col-md-6" style="
+             overflow-y: scroll;
+             height: 50%;
+             border: 1px solid;
+             border-color: #337ab7;
+             margin-bottom: 15px;
+             ">
             </div>
-         </div>
+            <div class="col-lg-5">
+                <div align="center">
+                    <textarea   id="message" class="form-control" rows="2" placeholder="Nachricht "style="margin-bottom: 15px;resize: none;"></textarea>
+                </div>
+            </div>
+            <div class="col-lg-1">
+                <button id="clickMe" class="btn btn-lg btn-primary" onclick="doSend ( )"style="margin-top: 4px;" >Senden</button>
+            </div>
+
+        </div>
+
+        </div>
+
+        <div class="col-md-3 col-md-offset-1" >
+            <input id="userToAdd" type="text" class="form-control" placeholder="Email des Freundes " size="20" style="margin-bottom: 15px;">
+            <button id="clickMe2" class="btn btn-info" onclick="doSendAjaxToAddFriend ( )">Neuer Kontakt</button>
         </div>
 
 
 
 
 
-        <div align="center">
-                 <textarea id="message" class="form-control" rows="5" placeholder="Nachricht "></textarea>
-                <!--    <input id="message" type="text" class="form-control" placeholder="Nachricht " size="40">-->
-            <button id="clickMe" class="btn btn-default" onclick="doSend ( )">ok</button>
-            <div id="chatBox"></div>
-        </div>
 
-        <input id="userToAdd" type="text" class="form-control" placeholder="Email des Freundes " size="40">
-        <button id="clickMe2" class="btn btn-default" onclick="doSendAjaxToAddFriend ( )">alert</button>
+
+
+
+
+
 
 
 
