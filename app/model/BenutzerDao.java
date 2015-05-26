@@ -101,8 +101,16 @@ public class BenutzerDao {
         }catch(Exception e){
             return null;
         }
-        String user = result.get("user").toString();
-        return parseUser(user).getName();
+        String userName = "";
+        try {
+            String user = result.get("user").toString();
+            userName = parseUser(user).getName();
+        } catch (Exception e) {
+            //Nullpointer Exception
+            System.out.print(e.getMessage());
+        }
+
+        return userName;
     }
 
     //Schaut ob der User existiert
