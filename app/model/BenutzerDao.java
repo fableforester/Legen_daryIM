@@ -42,7 +42,6 @@ public class BenutzerDao {
 
     //TODO Benutzer uebergeben, dafuer erstmal alles auf Benutzerstruktur umstellen
     public List<Benutzer> getFriends(String email){
-        //TODO siehe oben, diese Email ist erstmal irgendeine
         List<Benutzer> kontakte = new ArrayList<Benutzer>();
         if (email==null) return null;
         Iterable<Map<String,Object>> result = IteratorUtil.asCollection(exec.query(
@@ -89,7 +88,7 @@ public class BenutzerDao {
 
     public String createLink(String email1, String email2) {
         Map result = null;
-        if (email1==null || email2==null || !existUser(email1) || !existUser(email2)) return null;
+        if (existLink(email1, email2) || email1==null || email2==null || !existUser(email1) || !existUser(email2)) return null;
         try{
             result = IteratorUtil.singleOrNull(exec.query(
                     "MATCH (usereins:Benutzer {email:{1}}) " +
@@ -103,10 +102,10 @@ public class BenutzerDao {
         }
         String userName = "";
         try {
+            System.out.println(result.toString());
             String user = result.get("user").toString();
             userName = parseUser(user).getName();
         } catch (Exception e) {
-            //Nullpointer Exception
             System.out.print(e.getMessage());
         }
 
@@ -121,7 +120,8 @@ public class BenutzerDao {
     }
 
     //Parser, um die abgefragten User zu Benutzer zu parsen.
-    private static Benutzer parseUser(String user){
+    //WELL FORMED STRING: {name=name, email=email, passwort=passwort)
+    private Benutzer parseUser(String user){
         int namestartindex=user.toString().indexOf("name=")+5;
         int nameendindex=user.toString().indexOf(",", namestartindex);
         String name = user.substring(namestartindex, nameendindex);
@@ -132,6 +132,25 @@ public class BenutzerDao {
         int passwortendindex=user.toString().indexOf("}", passwortstartindex);
         String passwort = user.substring(passwortstartindex, passwortendindex);
         return new Benutzer(name, email, passwort);
+    }
+
+    private boolean existLink(String email1, String email2){
+        Map result = null;
+        if (email1==null || email2==null || !existUser(email1) || !existUser(email2)) return false;
+        try{
+            result = IteratorUtil.singleOrNull(exec.query(
+                    "MATCH (usereins:Benutzer {email:{1}}) " +
+                            "MATCH (userzwei:Benutzer {email:{2}}) " +
+                            "MATCH usereins-[:BEFREUNDET_MIT]->userzwei " +
+                            "RETURN count(*)",
+                    MapUtil.map("1", email1, "2", email2)));
+        }catch(Exception e){
+            return false;
+        }
+        System.out.println("Count: "+Integer.parseInt(result.get("count(*)").toString()));
+        if(Integer.parseInt(result.get("count(*)").toString())>0)
+            return true;
+        return false;
     }
 
 }
