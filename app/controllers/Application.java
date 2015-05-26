@@ -39,7 +39,7 @@ public class Application extends Controller {
      */
     public static WebSocket<String> webSocket() {
         String s = session().get("email");
-        return WebSocket.withActor(out -> WebSocketActor.props(out, s));
+        return WebSocket.withActor(out -> NachrichtenVersandActor.props(out, s));
     }
 
     /*

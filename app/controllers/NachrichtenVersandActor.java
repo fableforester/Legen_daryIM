@@ -6,17 +6,17 @@ import play.libs.Akka;
 
 import java.util.HashMap;
 
-public class WebSocketActor extends UntypedActor {
+public class NachrichtenVersandActor extends UntypedActor {
 
     private final ActorRef out;
 
     ActorRef persistActor = Akka.system().actorOf(Props.create(PersistMessageActor.class));
 
     public static Props props(ActorRef out) {
-        return Props.create(WebSocketActor.class, out);
+        return Props.create(NachrichtenVersandActor.class, out);
     }
 
-    public WebSocketActor(ActorRef out) {
+    public NachrichtenVersandActor(ActorRef out) {
         this.out = out;
     }
 
