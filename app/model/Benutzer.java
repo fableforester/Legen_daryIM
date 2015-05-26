@@ -45,4 +45,11 @@ public class Benutzer {
         return kontaktliste;
     }
 
+    public void setPasswort(String passwort) {
+        this.passwort = passwort;
+    }
+
+    public void setKontaktliste(List<Benutzer> kontaktliste) {
+        this.kontaktliste = kontaktliste;
+    }
 }

@@ -1,5 +1,7 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import model.Benutzer;
 import model.BenutzerDao;
 
 
@@ -112,14 +114,18 @@ public class Application extends Controller {
     public static Result addFriend(String email) {
         if (benutzerDao.existUser(email)) {
             String emailSelf = session().get("email");
-            String name = benutzerDao.createLink(emailSelf, email);
-            if (name != null)
-                return ok(name);
+            Benutzer addedFriend = benutzerDao.createLink(emailSelf, email);
+            //Passwort/Liste leeren damit dieser nicht an den Client gesendet wird
+            addedFriend.setPasswort("");
+            addedFriend.setKontaktliste(null);
+
+            JsonNode addedFriednJson = play.libs.Json.toJson(addedFriend);
+            return ok(addedFriednJson);
         }
-        return ok("NichtGefunden");
+        return badRequest();
     }
 
-    @SuppressWarnings("deprecation")
+
     public static Result jsRoutes()
     {
         response().setContentType("text/javascript");
