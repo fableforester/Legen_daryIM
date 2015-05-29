@@ -16,6 +16,8 @@ import views.html.index;
 import views.html.login;
 import views.html.register;
 
+import java.util.List;
+
 import static play.data.Form.form;
 
 public class Application extends Controller {
@@ -125,12 +127,17 @@ public class Application extends Controller {
         return badRequest();
     }
 
+    public static Result getFriends() {
+        List<Benutzer> friends = benutzerDao.getFriends(session("email"));
+        return ok(play.libs.Json.toJson(friends).toString());
+    }
 
     public static Result jsRoutes()
     {
         response().setContentType("text/javascript");
         return ok(Routes.javascriptRouter("appRoutes", //appRoutes will be the JS object available in our view
-                routes.javascript.Application.addFriend()
+                routes.javascript.Application.addFriend(),
+                routes.javascript.Application.getFriends()
         ));
     }
 

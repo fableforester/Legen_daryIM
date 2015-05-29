@@ -20,6 +20,8 @@ POST        /register                controllers.Application.registerBenutzer()
 
 PUT         /add/:email              controllers.Application.addFriend(email: String)
 
+GET         /firends/get             controllers.Application.getFriends()
+
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/js/routes        controllers.Application.jsRoutes()
 

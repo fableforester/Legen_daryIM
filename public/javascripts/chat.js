@@ -29,8 +29,23 @@ function writeMessageToScreen(message) {
      div.innerHTML = div.innerHTML + message+'<br>';
      div.scrollTop = div.scrollHeight;
 
+}
 
+function writeUserMessageToScreen(email, message) {
 
+    var userName = '';
+    for (var i = 0; i < friends.length; i++) {
+        if (friends[i].email == email) {
+            userName = friends[i].name;
+        }
+    }
+
+    if (userName = '') {
+        //TODO    
+    }
+
+    var box = document.getElementById(userName);
+    var messageElement = document.createElement('div');
 
 
 }

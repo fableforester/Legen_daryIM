@@ -37,7 +37,7 @@ function onClose(evt) {
 }
 
 function onMessage(evt) {
-    writeMessageToScreen('<span style="color: blue;">RESPONSE: ' + evt.data + '</span>');
+    writeMessageToScreen('<span style="color: green;">Empfangen von: ' + evt.data + '</span>');
 }
 
 function onError(evt) {
@@ -58,7 +58,7 @@ function doSend() {
 
     var jsonString= JSON.stringify(nachricht);
 
-    writeMessageToScreen("SENT TO "+ empfangerString + ": " + message);
+    writeMessageToScreen('<span style="color: blue;">Gesendet an '+ empfangerString + ': </span>' + message);
     websocket.send(jsonString);
 }
 
