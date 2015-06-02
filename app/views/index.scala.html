@@ -12,13 +12,10 @@
         <link rel="stylesheet" href="@routes.Assets.at("bootstrap/css/bootstrap.min.css")" type="text/css">
     </head>
     <body onunload="closeWebsocket()">
-        <p id="userName">Angemeldet als: @user</p>
+        <p id="userEmail">Angemeldet als: @user</p>
         <form ACTION="@routes.Application.logout()">
-
             <button type="submit" class="btn btn-sm btn-default pull-left" >Logout</button>
-
         </form>
-
 
         <div class="row">
             <div class="col-md-12" >
@@ -30,7 +27,7 @@
                         <div class="panel-body" >
                             <select id="kontaktListe" name="top5" size="5" class="form-control"  style="height: 50%;">
                             @friends.map { friend =>
-                                <option>@friend.getName</option>
+                                <option id="@friend.getEmail">@friend.getName</option>
                             }
                             </select>
                         </div>
@@ -43,6 +40,9 @@
              border-color: #337ab7;
              margin-bottom: 15px;
              ">
+                @friends.map { friend =>
+                  <div id="@friend.getEmail()Chat"></div>
+                }
             </div>
             <div class="col-lg-5">
                 <div align="center">
@@ -61,12 +61,6 @@
             <input id="userToAdd" type="text" class="form-control" placeholder="Email des Freundes " size="20" style="margin-bottom: 15px;">
             <button id="clickMe2" class="btn btn-info" onclick="doSendAjaxToAddFriend ( )">Neuer Kontakt</button>
         </div>
-
-
-
-
-
-
 
 
 

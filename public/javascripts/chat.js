@@ -41,7 +41,7 @@ function writeUserMessageToScreen(email, message) {
     }
 
     if (userName = '') {
-        //TODO    
+        //TODO
     }
 
     var box = document.getElementById(userName);
