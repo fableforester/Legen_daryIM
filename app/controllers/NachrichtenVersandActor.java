@@ -33,9 +33,10 @@ public class NachrichtenVersandActor extends UntypedActor {
 
             //Empfänger ermitteln
             String empfanger = node.get("empfaenger").toString();
+            empfanger = empfanger.substring(1, empfanger.length() - 1);
 
             //Ein anderer Actor persisitiert die Nachricht
-            persistActor.tell(node, self());
+            //persistActor.tell(node, self());
 
             //Der Pfad zum Empfänger Actor wird rausgesucht
             ActorPath targetpath = clientWebSocketActors.get(empfanger);
@@ -45,10 +46,11 @@ public class NachrichtenVersandActor extends UntypedActor {
                 return;
 
             //Eine Referenz auf den Actor wird vom System abgerufen
-            ActorSelection targetActor = Akka.system().actorSelection(targetpath);
+            ActorRef targetActor = Akka.system().actorFor(targetpath);
 
             //Dem Actor die Nachricht senden
             targetActor.tell(node, self());
+
 
         }
 

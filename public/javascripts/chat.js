@@ -31,21 +31,14 @@ function writeMessageToScreen(message) {
 
 }
 
-function writeUserMessageToScreen(email, message) {
 
-    var userName = '';
-    for (var i = 0; i < friends.length; i++) {
-        if (friends[i].email == email) {
-            userName = friends[i].name;
-        }
-    }
+function writeUserMessageToScreen(evt) {
+    var msg = JSON.parse(evt);
+    var div = document.getElementById(msg.empfaenger);
 
-    if (userName = '') {
-        //TODO
-    }
 
-    var box = document.getElementById(userName);
-    var messageElement = document.createElement('div');
+    //var box = document.getElementById(userName);
+    //var messageElement = document.createElement('div');
 
 
 }

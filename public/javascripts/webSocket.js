@@ -37,7 +37,7 @@ function onClose(evt) {
 }
 
 function onMessage(evt) {
-    writeMessageToScreen('<span style="color: green;">Empfangen von: ' + evt.data + '</span>');
+    writeUserMessageToScreen(evt);
 }
 
 function onError(evt) {
