@@ -12,6 +12,9 @@ public class NachrichtenVersandActor extends UntypedActor {
 
     ActorRef persistActor = Akka.system().actorOf(Props.create(PersistMessageActor.class));
 
+    //Die Liste enthält die Pfade auf WebSocketActors zu den einzelnen User(Clients)
+    static HashMap<String, ActorPath> clientWebSocketActors = new HashMap<>();
+
     public static Props props(ActorRef out) {
         return Props.create(NachrichtenVersandActor.class, out);
     }
@@ -21,9 +24,6 @@ public class NachrichtenVersandActor extends UntypedActor {
     }
 
     public void onReceive(Object message) throws Exception {
-        //TODO das senden der Nachricht in extra Actor
-        //Das auslagern hat den Vorteil für scheduled jobs, regelmäßig senden an
-        //offline kontakte
 
         if (message instanceof String) {
             String event = (String)message;
@@ -49,15 +49,14 @@ public class NachrichtenVersandActor extends UntypedActor {
             ActorRef targetActor = Akka.system().actorFor(targetpath);
 
             //Dem Actor die Nachricht senden
-            targetActor.tell(node, self());
+            targetActor.tell(node.toString(), self());
 
 
         }
 
     }
 
-    //Die Liste enthält die Pfade auf WebSocketActors zu den einzelnen User(Clients)
-    static HashMap<String, ActorPath> clientWebSocketActors = new HashMap<>();
+
 
     /**
      * Die Methode schaltet sich vor die eigentliche props Methode und speichert

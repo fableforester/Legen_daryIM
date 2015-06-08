@@ -25,15 +25,16 @@ function testWebSocket() {
 }
 
 function closeWebsocket() {
+    console.log("CLOSED");
     websocket.close();
 }
 
 function onOpen(evt) {
-    writeMessageToScreen("CONNECTED");
+    console.log("CONNECTED");
 }
 
 function onClose(evt) {
-    writeMessageToScreen("DISCONNECTED");
+    console.log("DISCONNECTED");
 }
 
 function onMessage(evt) {
