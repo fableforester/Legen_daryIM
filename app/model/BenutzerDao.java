@@ -83,23 +83,35 @@ public class BenutzerDao {
         }catch(Exception e){
             return null;
         }
-        String userName = "";
+       /* String userName = "";
         try {
             System.out.println(result.toString());
             String user = result.get("user").toString();
             userName = parseUser(user).getName();
         } catch (Exception e) {
             System.out.print(e.getMessage());
-        }
+        }*/
 
         return getUser(email2);
     }
 
-    //Schaut ob der User existiert
-    public boolean existUser(String email) {
-        if(getUser(email)!=null)
-            return true;
-        return false;
+    public boolean persistMessage(String sender, String empfaenger, String message){
+        Map result = null;
+        if (!existLink(sender, empfaenger) || sender==null || empfaenger==null || !existUser(sender) || !existUser(empfaenger)) return false;
+        try{
+            result = IteratorUtil.singleOrNull(exec.query(
+                    "MATCH (sender:Benutzer {email:{2}}) " +
+                            "MATCH (empfaenger:Benutzer {email:{3}}) " +
+                            "CREATE (message:Nachricht {text:{1}})" +
+                            "CREATE sender-[:SENDET_NACHRICHT]->message " +
+                            "CREATE empfaenger-[:EMPFAENGT_NACHRICHT]->message " +
+                            "RETURN message",
+                    MapUtil.map("1", message, "2", sender, "3", empfaenger)));
+        }catch(Exception e){
+            return false;
+        }
+
+        return true;
     }
 
     //Parser, um die abgefragten User zu Benutzer zu parsen.
@@ -132,6 +144,13 @@ public class BenutzerDao {
         }
         System.out.println("Count: "+Integer.parseInt(result.get("count(*)").toString()));
         if(Integer.parseInt(result.get("count(*)").toString())>0)
+            return true;
+        return false;
+    }
+
+    //Schaut ob der User existiert
+    public boolean existUser(String email) {
+        if(getUser(email)!=null)
             return true;
         return false;
     }

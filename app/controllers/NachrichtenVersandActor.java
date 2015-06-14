@@ -36,7 +36,7 @@ public class NachrichtenVersandActor extends UntypedActor {
             empfanger = empfanger.substring(1, empfanger.length() - 1);
 
             //Ein anderer Actor persisitiert die Nachricht
-            //persistActor.tell(node, self());
+            persistActor.tell(node, self());
 
             //Der Pfad zum Empfänger Actor wird rausgesucht
             ActorPath targetpath = clientWebSocketActors.get(empfanger);
