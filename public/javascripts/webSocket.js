@@ -81,7 +81,8 @@ function doSend() {
 
     var jsonString= JSON.stringify(nachricht);
 
-    writeMessageToScreen('<span style="color: blue;">Gesendet an '+ empfangerUserName + ': </span></br>' + message);
+    //writeMessageToScreen('<span style="color: blue;">Gesendet an '+ empfangerUserName + ': </span></br>' + message);
+    writeSendedMessageToScreen(nachricht);
     websocket.send(jsonString);
 }
 
