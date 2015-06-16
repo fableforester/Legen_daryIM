@@ -28,6 +28,7 @@ public class NachrichtenVersandActor extends UntypedActor {
         if (message instanceof String) {
             String event = (String)message;
 
+
             //Json Objekt erzeugen
             JsonNode node = play.libs.Json.parse(event);
 
