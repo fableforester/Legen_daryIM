@@ -8,7 +8,7 @@ function init() {
 
 function writeMessageToScreen(message) {
 
-     var div = document.getElementById('chat');
+     var div = document.getElementById(message.empfaenger + 'Chat');
      div.innerHTML = div.innerHTML + message+'<br>';
      div.scrollTop = div.scrollHeight;
 
@@ -29,8 +29,18 @@ function writeUserMessageToScreen(evt) {
 function initChangedHandler() {
     var kontaktListeElement = document.getElementById('kontaktListe');
     kontaktListeElement.onchange = function() {
-        writeMessageToScreen('Kontakt zu ' + kontaktListeElement.options[kontaktListeElement.selectedIndex].text + ' geändert');
+        var benutzerAuswahl = kontaktListeElement.options[kontaktListeElement.selectedIndex].text;
 
+        for (var i = 0; i < kontaktListeElement.options.length; i++) {
+            var id = kontaktListeElement.options[i].getAttribute("id") + 'Chat';
+            var el = document.getElementById(id);
+
+            if (i != kontaktListeElement.selectedIndex) {
+                el.style.display = 'none';
+            } else {
+                el.style.display = 'block';
+            }
+        }
     }
 }
 
