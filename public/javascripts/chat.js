@@ -8,23 +8,6 @@ function init() {
 
 function writeMessageToScreen(message) {
 
-    //var pre = document.createElement("p");
-    //pre.innerHTML = message;
-    //output.appendChild(pre);
-    /*   var newcontent = document.createElement("p");
-    newcontent.id = 'message_id';
-    newcontent.appendChild(document.createTextNode(message));
-
-
-    var theDiv = document.getElementById("chat");
-    var content = document.createTextNode(message+"<br>");
-    theDiv.appendChild(content);*/
-
-
-    /* var scr = document.getElementById('chat');
-    scr.parentNode.insertBefore(newcontent, scr);
-
-     */
      var div = document.getElementById('chat');
      div.innerHTML = div.innerHTML + message+'<br>';
      div.scrollTop = div.scrollHeight;
@@ -33,20 +16,19 @@ function writeMessageToScreen(message) {
 
 
 function writeUserMessageToScreen(evt) {
-    var msg = JSON.parse(evt);
-    var div = document.getElementById(msg.empfaenger);
+    var msg = JSON.parse(evt.data);
+    var div = document.getElementById(msg.sender + "Chat");
+    var date = new Date(msg.gesendetAm);
 
-
-    //var box = document.getElementById(userName);
-    //var messageElement = document.createElement('div');
-
+    var messageDiv = document.createElement("div");
+    messageDiv.innerHTML = '<span style="color: green;">' + date.toTimeString() + '</br> Empfangen von '+ msg.sender + ': </span>' + msg.text + '</br>';
+    div.appendChild(messageDiv);
 
 }
 
 function initChangedHandler() {
     var kontaktListeElement = document.getElementById('kontaktListe');
     kontaktListeElement.onchange = function() {
-       // output.innerHTML = "";
         writeMessageToScreen('Kontakt zu ' + kontaktListeElement.options[kontaktListeElement.selectedIndex].text + ' geändert');
 
     }

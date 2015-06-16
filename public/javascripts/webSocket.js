@@ -1,7 +1,10 @@
 
 var wsUri = "ws://localhost:9000/webSocket";
+var confirmationWsUri = "ws://localhost:9000/ConfirmationWebSocket";
+
 var output;
-websocket = new WebSocket(wsUri);
+var websocket = new WebSocket(wsUri);
+var confirmationWebsocket = new WebSocket(confirmationWsUri);
 
 function init() {
     output = document.getElementById("chatBox");
@@ -22,6 +25,15 @@ function testWebSocket() {
     websocket.onerror = function (evt) {
         onError(evt);
     };
+
+    confirmationWebsocket.onmessage = function (evt) {
+        confirmationRecieved(evt);
+    };
+
+
+    confirmationWebsocket.onerror = function (evt) {
+        onError(evt);
+    };
 }
 
 function closeWebsocket() {
@@ -39,6 +51,7 @@ function onClose(evt) {
 
 function onMessage(evt) {
     writeUserMessageToScreen(evt);
+    confirmationWebsocket.send(evt);
 }
 
 function onError(evt) {
@@ -47,10 +60,17 @@ function onError(evt) {
 
 function doSend() {
     var kontaktListeElement = document.getElementById('kontaktListe');
-    var empfangerUserName = kontaktListeElement.options[kontaktListeElement.selectedIndex].innerHTML;
+
+    try {
+        var empfangerUserName = kontaktListeElement.options[kontaktListeElement.selectedIndex].innerHTML;
+    } catch (err) {
+        alert("Bitte Empfänger auswählen");
+    }
+
     var empfangerEmail = kontaktListeElement.options[kontaktListeElement.selectedIndex].getAttribute("id");
 
     var message = document.getElementById('message').value;
+    document.getElementById('message').value = '';
     var date = new Date();
 
     var nachricht = new Object();
@@ -61,8 +81,12 @@ function doSend() {
 
     var jsonString= JSON.stringify(nachricht);
 
-    writeMessageToScreen('<span style="color: blue;">Gesendet an '+ empfangerUserName + ': </span>' + message);
+    writeMessageToScreen('<span style="color: blue;">Gesendet an '+ empfangerUserName + ': </span></br>' + message);
     websocket.send(jsonString);
+}
+
+function confirmationRecieved(evt){
+    alert(evt);
 }
 
 window.addEventListener("load", init, false);

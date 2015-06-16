@@ -4,26 +4,28 @@
 
 # Home page
 
-GET         /                        controllers.Application.index()
+GET         /                             controllers.Application.index()
 
-GET         /webSocket               controllers.Application.webSocket()
+GET         /webSocket                    controllers.Application.webSocket()
 
-GET         /login                   controllers.Application.login()
+GET         /ConfirmationWebSocket        controllers.Application.ConfirmationWebSocket()
 
-GET         /logout                  controllers.Application.logout()
+GET         /login                        controllers.Application.login()
 
-POST        /login                   controllers.Application.authenticate()
+GET         /logout                       controllers.Application.logout()
 
-GET         /register                controllers.Application.register()
+POST        /login                        controllers.Application.authenticate()
 
-POST        /register                controllers.Application.registerBenutzer()
+GET         /register                     controllers.Application.register()
 
-PUT         /add/:email              controllers.Application.addFriend(email: String)
+POST        /register                     controllers.Application.registerBenutzer()
 
-GET         /firends/get             controllers.Application.getFriends()
+PUT         /add/:email                   controllers.Application.addFriend(email: String)
+
+GET         /firends/get                  controllers.Application.getFriends()
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/js/routes        controllers.Application.jsRoutes()
+GET         /assets/js/routes             controllers.Application.jsRoutes()
 
-GET         /assets/*file            controllers.Assets.at(path="/public", file)
+GET         /assets/*file                 controllers.Assets.at(path="/public", file)
 

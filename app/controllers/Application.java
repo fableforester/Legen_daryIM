@@ -44,6 +44,10 @@ public class Application extends Controller {
         return WebSocket.withActor(out -> NachrichtenVersandActor.props(out, s));
     }
 
+    public static WebSocket<String> ConfirmationWebSocket() {
+        return WebSocket.withActor(out -> ConfirmationWebSocket.props(out));
+    }
+
     /*
     Erstellt eine Form und gibt die LogIn Seite zurück
      */
