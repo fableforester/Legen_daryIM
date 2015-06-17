@@ -5,20 +5,21 @@ import akka.actor.UntypedActor;
 import com.fasterxml.jackson.databind.JsonNode;
 import model.BenutzerDao;
 
+import java.util.Date;
+
 public class PersistMessageActor extends UntypedActor {
 
     public static Props props = Props.create(PersistMessageActor.class);
-    public BenutzerDao dao = new BenutzerDao();
+    public BenutzerDao dao = BenutzerDao.getInstance();
 
     public void onReceive(Object msg) throws Exception {
         if (msg instanceof JsonNode) {
+            String timestamp = (new Date()).toString();
             JsonNode msgJson = (JsonNode)msg;
             String sender = msgJson.get("sender").toString().replace("\"", "");
-            if(sender.contains(":"))
-                sender = sender.substring(sender.indexOf(":")+2);
             String empfaenger = msgJson.get("empfaenger").toString().replace("\"", "");
             String nachricht = msgJson.get("text").toString().replace("\"", "");
-            if(!dao.persistMessage(sender, empfaenger, nachricht))
+            if(!dao.persistMessage(sender, empfaenger, nachricht, timestamp))
                 System.out.println("Fehler beim persistieren der Nachricht");
         }
     }

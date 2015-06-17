@@ -22,7 +22,7 @@ import static play.data.Form.form;
 
 public class Application extends Controller {
 
-    public static BenutzerDao benutzerDao = new BenutzerDao();
+    public static BenutzerDao benutzerDao = BenutzerDao.getInstance();
 
     /*
     Erstellt die Hauptseite

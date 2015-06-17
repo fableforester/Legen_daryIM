@@ -12,6 +12,15 @@ public class BenutzerDao {
 
     static JdbcCypherExecutor exec = new JdbcCypherExecutor("http://localhost:7474", "neo4j", "mypass");
 
+    private static BenutzerDao benutzerDao;
+
+    public static BenutzerDao getInstance(){
+        if(benutzerDao == null){
+            benutzerDao = new BenutzerDao();
+        }
+        return benutzerDao;
+    }
+
     public boolean validateUser(String email, String password) {
         Benutzer user = getUser(email);
         if(user != null) {
@@ -83,30 +92,22 @@ public class BenutzerDao {
         }catch(Exception e){
             return null;
         }
-       /* String userName = "";
-        try {
-            System.out.println(result.toString());
-            String user = result.get("user").toString();
-            userName = parseUser(user).getName();
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
-        }*/
 
         return getUser(email2);
     }
 
-    public boolean persistMessage(String sender, String empfaenger, String message){
+    public boolean persistMessage(String sender, String empfaenger, String message, String timestamp){
         Map result = null;
-        if (!existLink(sender, empfaenger) || sender==null || empfaenger==null || !existUser(sender) || !existUser(empfaenger)) return false;
+        if (!existLink(sender, empfaenger) || sender==null || empfaenger==null || "".equals(sender) || "".equals(empfaenger) || !existUser(sender) || !existUser(empfaenger)) return false;
         try{
             result = IteratorUtil.singleOrNull(exec.query(
                     "MATCH (sender:Benutzer {email:{2}}) " +
                             "MATCH (empfaenger:Benutzer {email:{3}}) " +
-                            "CREATE (message:Nachricht {text:{1}})" +
+                            "CREATE (message:Nachricht {text:{1}, timestamp:{4}})" +
                             "CREATE sender-[:SENDET_NACHRICHT]->message " +
                             "CREATE empfaenger-[:EMPFAENGT_NACHRICHT]->message " +
                             "RETURN message",
-                    MapUtil.map("1", message, "2", sender, "3", empfaenger)));
+                    MapUtil.map("1", message, "2", sender, "3", empfaenger, "4", timestamp)));
         }catch(Exception e){
             return false;
         }
@@ -129,7 +130,7 @@ public class BenutzerDao {
         return new Benutzer(name, email, passwort);
     }
 
-    private boolean existLink(String email1, String email2){
+    public boolean existLink(String email1, String email2){
         Map result = null;
         if (email1==null || email2==null || !existUser(email1) || !existUser(email2)) return false;
         try{
@@ -153,6 +154,41 @@ public class BenutzerDao {
         if(getUser(email)!=null)
             return true;
         return false;
+    }
+
+    public boolean resetDB(){
+        Map result = null;
+        try{
+            result = IteratorUtil.singleOrNull(exec.query(
+                            "MATCH n-[r]-m " +
+                            "DELETE n, r, m; ",
+                    MapUtil.map()));
+        }catch(Exception e){
+            return false;
+        }
+        try{
+            result = IteratorUtil.singleOrNull(exec.query(
+                            "MATCH (x:Benutzer) " +
+                            "DELETE x;",
+                    MapUtil.map()));
+        }catch(Exception e){
+            return false;
+        }
+        try{
+            result = IteratorUtil.singleOrNull(exec.query(
+                    "CREATE (alex:Benutzer { name:\"Alex Berg\", email:\"alex@web.de\", passwort:\"geheim\"})\n" +
+                            "CREATE (moritz:Benutzer { name:\"Moritz Hielscher\", email:\"moritz@web.de\", passwort:\"geheim\"})\n" +
+                            "CREATE (fabian:Benutzer { name:\"Fabian Lewalder\", email:\"fabian@web.de\", passwort:\"geheim\"})\n" +
+                            "CREATE (testnutzer:Benutzer { name:\"Test\", email:\"email1@web.de\", passwort:\"geheim\"})\n" +
+                            "CREATE (alex)-[:BEFREUNDET_MIT]->(moritz)\n" +
+                            "CREATE (moritz)-[:BEFREUNDET_MIT]->(alex)\n" +
+                            "CREATE (alex)-[:BEFREUNDET_MIT]->(fabian)\n" +
+                            "CREATE (fabian)-[:BEFREUNDET_MIT]->(alex)",
+                    MapUtil.map()));
+        }catch(Exception e){
+            return false;
+        }
+        return true;
     }
 
 }
