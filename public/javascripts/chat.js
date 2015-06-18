@@ -17,16 +17,10 @@ function writeSendedMessageToScreen(message) {
 
     uDiv.appendChild(mDiv);
 
-
-
-     //var div = document.getElementById(message.empfaenger + 'Chat');
-     //div.innerHTML = div.innerHTML + message+'<br>';
-     //div.scrollTop = div.scrollHeight;
-
 }
 
 
-function writeUserMessageToScreen(evt) {
+function writeRecievedMessageToScreen(evt) {
     var msg = JSON.parse(evt.data);
     var div = document.getElementById(msg.sender + "Chat");
     var date = new Date(msg.gesendetAm);

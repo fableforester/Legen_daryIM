@@ -43,8 +43,10 @@ public class NachrichtenVersandActor extends UntypedActor {
             ActorPath targetpath = clientWebSocketActors.get(empfanger);
 
             //Sollte der Empfänger offline sein geht die Nchricht ins leere
-            if (targetpath == null)
+            if (targetpath == null) {
+                System.out.println("Targetpath ist null");
                 return;
+            }
 
             //Eine Referenz auf den Actor wird vom System abgerufen
             ActorRef targetActor = Akka.system().actorFor(targetpath);

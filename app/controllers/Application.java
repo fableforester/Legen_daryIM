@@ -45,7 +45,8 @@ public class Application extends Controller {
     }
 
     public static WebSocket<String> ConfirmationWebSocket() {
-        return WebSocket.withActor(out -> ConfirmationWebSocket.props(out));
+        String s = session().get("email");
+        return WebSocket.withActor(out -> ConfirmationWebSocket.props(out, s));
     }
 
     /*

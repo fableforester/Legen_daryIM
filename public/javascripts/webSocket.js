@@ -50,12 +50,12 @@ function onClose(evt) {
 }
 
 function onMessage(evt) {
-    writeUserMessageToScreen(evt);
-    confirmationWebsocket.send(evt);
+    writeRecievedMessageToScreen(evt);
+    confirmationWebsocket.send(evt.data);
 }
 
 function onError(evt) {
-    writeMessageToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
+    alert(evt);
 }
 
 function doSend() {
@@ -81,13 +81,12 @@ function doSend() {
 
     var jsonString= JSON.stringify(nachricht);
 
-    //writeMessageToScreen('<span style="color: blue;">Gesendet an '+ empfangerUserName + ': </span></br>' + message);
     writeSendedMessageToScreen(nachricht);
     websocket.send(jsonString);
 }
 
 function confirmationRecieved(evt){
-    alert(evt);
+    alert(evt.data);
 }
 
 window.addEventListener("load", init, false);
