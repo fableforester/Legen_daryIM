@@ -10,19 +10,22 @@ GET         /webSocket                    controllers.Application.webSocket()
 
 GET         /ConfirmationWebSocket        controllers.Application.ConfirmationWebSocket()
 
-GET         /login                        controllers.Application.login()
-
-GET         /logout                       controllers.Application.logout()
-
-POST        /login                        controllers.Application.authenticate()
-
-GET         /register                     controllers.Application.register()
-
-POST        /register                     controllers.Application.registerBenutzer()
-
 PUT         /add/:email                   controllers.Application.addFriend(email: String)
 
 GET         /firends/get                  controllers.Application.getFriends()
+
+# Authentifiezierung #
+
+GET         /login                        controllers.Authentication.login()
+
+GET         /logout                       controllers.Authentication.logout()
+
+POST        /login                        controllers.Authentication.authenticate()
+
+GET         /register                     controllers.Authentication.register()
+
+POST        /register                     controllers.Authentication.registerBenutzer()
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/js/routes             controllers.Application.jsRoutes()
