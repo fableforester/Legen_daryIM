@@ -86,7 +86,7 @@ function doSend() {
 }
 
 function confirmationRecieved(evt){
-    alert(evt.data);
+    alert("Nachricht ist angekommen");
 }
 
 window.addEventListener("load", init, false);

@@ -32,7 +32,7 @@ public class BenutzerDao {
         return false;
     }
 
-    //TODO Benutzer uebergeben, dafuer erstmal alles auf Benutzerstruktur umstellen
+    
     public List<Benutzer> getFriends(String email){
         List<Benutzer> kontakte = new ArrayList<Benutzer>();
         if (email==null) return null;
