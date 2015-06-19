@@ -12,6 +12,9 @@ function doSendAjaxToAddFriend( ) {
             var kontaktListeElement = document.getElementById('kontaktListe');
             kontaktListeElement.appendChild(emailOption);
             userToAddField.value = "";
+        },
+        error: function ( data ) {
+            alert("Benutzer nicht gefunden");
         }
     });
 }

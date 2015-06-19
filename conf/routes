@@ -12,7 +12,7 @@ GET         /ConfirmationWebSocket        controllers.Application.ConfirmationWe
 
 PUT         /add/:email                   controllers.Application.addFriend(email: String)
 
-GET         /firends/get                  controllers.Application.getFriends()
+GET         /friends/get                  controllers.Application.getFriends()
 
 # Authentifiezierung #
 
