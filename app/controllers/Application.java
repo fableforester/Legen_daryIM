@@ -6,15 +6,12 @@ import model.BenutzerDao;
 
 
 import play.Routes;
-import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 
 import play.mvc.Security;
 import play.mvc.WebSocket;
 import views.html.index;
-import views.html.login;
-import views.html.register;
 
 import java.util.List;
 
@@ -41,7 +38,7 @@ public class Application extends Controller {
      */
     public static WebSocket<String> webSocket() {
         String s = session().get("email");
-        return WebSocket.withActor(out -> NachrichtenVersandActor.props(out, s));
+        return WebSocket.withActor(out -> MessageWebSocket.props(out, s));
     }
 
     public static WebSocket<String> ConfirmationWebSocket() {
